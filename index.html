@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EVA-Prinzip – Werkstatt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#EEF2F7;--card:#fff;--ink:#14213D;--mut:#53607A;--line:#D3DBE8;--e:#2F6BDB;--v:#E0A100;--a:#14946F;--m:#7B55D9;--n:#14213D;--ok:#1B7F4B;--bad:#C23B3B;--onv:#14213D;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1626;--card:#19233A;--ink:#E8EDF7;--mut:#A3B0C8;--line:#2B3956;--e:#6C9BFF;--v:#F0BE3A;--a:#3CC9A0;--m:#A98BFF;--n:#E8EDF7;--ok:#55D08E;--bad:#FF8585}}
+:root[data-theme="dark"]{--bg:#0F1626;--card:#19233A;--ink:#E8EDF7;--mut:#A3B0C8;--line:#2B3956;--e:#6C9BFF;--v:#F0BE3A;--a:#3CC9A0;--m:#A98BFF;--n:#E8EDF7;--ok:#55D08E;--bad:#FF8585}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Lexend","Segoe UI",Verdana,sans-serif;line-height:1.55;font-size:16px}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:clamp(1.6rem,5vw,2.4rem);margin:8px 0 4px;line-height:1.15}
+h2{font-size:1.35rem;margin:0 0 6px}
+h3{font-size:1.05rem;margin:0 0 6px}
+p{margin:0 0 10px}
+.sub{color:var(--mut);margin-bottom:18px}
+.flow{position:relative;display:flex;align-items:stretch;gap:0;margin:14px 0 22px}
+.flow .nd{flex:1;padding:14px 10px;text-align:center;font-weight:700;color:#fff}
+.flow .nd:nth-child(1){background:var(--e);border-radius:14px 0 0 14px}
+.flow .nd:nth-child(2){background:var(--v);color:var(--onv)}
+.flow .nd:nth-child(3){background:var(--a);border-radius:0 14px 14px 0}
+.flow .nd small{display:block;font-weight:400;font-size:.8rem;opacity:.9}
+.flow i{position:absolute;left:0;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--n);animation:run 2.6s ease-in-out 1 forwards}
+@keyframes run{from{left:0}to{left:100%}}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:10px;color:var(--mut);font-size:.9rem}
+.bar .tr{flex:1;height:8px;background:var(--line);border-radius:8px;overflow:hidden}
+.bar .fl{height:100%;width:0;background:var(--a);transition:width .4s}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+nav button{flex:1 1 120px;font:inherit;font-size:.9rem;padding:9px 8px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer}
+nav button[aria-selected="true"]{border-color:var(--c);background:var(--c);color:var(--cc,#fff);font-weight:600}
+nav button.dn::after{content:" ✓"}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--n);outline-offset:2px}
+.task{background:var(--card);border-radius:16px;padding:20px;border-top:8px solid var(--c)}
+.card{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0}
+.hint{color:var(--mut);font-size:.92rem}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 10px;margin:6px 0;border-radius:10px;border:2px solid transparent;background:var(--bg)}
+.row.ok{border-color:var(--ok)}.row.bad{border-color:var(--bad)}
+.row .txt{flex:1 1 220px}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt,.chip{font:inherit;font-size:.9rem;padding:6px 12px;border-radius:20px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.opt.on,.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--cc,#fff)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip.bad{border-color:var(--bad);border-style:dashed}
+.btn{font:inherit;font-weight:600;padding:9px 18px;border:0;border-radius:10px;background:var(--c);color:var(--cc,#fff);cursor:pointer;margin-top:6px}
+.btn.gh{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.fb{min-height:1.4em;margin:8px 0 0;font-weight:600}
+.fb.good{color:var(--ok)}.fb.no{color:var(--bad)}
+select,textarea{font:inherit;padding:6px 8px;border-radius:8px;border:2px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+textarea{width:100%;min-height:70px}
+.f3{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:8px;margin:8px 0}
+.bx{padding:10px;border-radius:10px;background:var(--bg);font-size:.92rem;border-top:5px solid}
+.bx.e{border-color:var(--e)}.bx.v{border-color:var(--v)}.bx.a{border-color:var(--a)}
+.bx b{display:block;margin-bottom:4px}
+.bx label{display:block;padding:4px 0;cursor:pointer}
+.scen{padding:6px;border-radius:12px;border:2px solid transparent;margin:10px 0}
+.scen.ok{border-color:var(--ok)}.scen.bad{border-color:var(--bad)}
+fieldset{border:0;margin:0;padding:0}
+legend{position:absolute;left:-9999px}
+.merke{margin-top:16px;padding:14px;border-radius:12px;background:var(--bg);border-left:8px solid var(--c)}
+.merke[hidden]{display:none}
+.end{background:var(--a);color:#fff;border-radius:14px;padding:14px 18px;margin-bottom:14px;font-weight:600}
+.end[hidden]{display:none}
+.mrow{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;padding:8px 10px;margin:6px 0;background:var(--bg);border-radius:10px;border:2px solid transparent}
+.mrow.ok{border-color:var(--ok)}.mrow.bad{border-color:var(--bad)}
+.mrow .nm{flex:1 1 140px;font-weight:600}
+@media(max-width:640px){.f3{grid-template-columns:1fr}.flow .nd small{display:none}}
+@media(prefers-reduced-motion:reduce){.flow i{animation:none;display:none}.bar .fl{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Das EVA-Prinzip</h1>
+<p class="sub">So arbeitet jeder Computer: Du erarbeitest es in fünf Aufgaben.</p>
+<div class="flow" aria-hidden="true"><div class="nd">Eingabe<small>Daten rein</small></div><div class="nd">Verarbeitung<small>Daten ändern</small></div><div class="nd">Ausgabe<small>Ergebnis raus</small></div><i></i></div>
+<div class="end" id="end" hidden>Geschafft! Du kennst jetzt das EVA-Prinzip und kannst es an Geräten und Beispielen erklären.</div>
+<div class="bar"><span id="pt">0 von 5 Aufgaben geschafft</span><div class="tr"><div class="fl" id="pf"></div></div></div>
+<nav id="nav" role="tablist" aria-label="Aufgaben"></nav>
+<div id="tasks"></div>
+</main>
+<script>
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const need={1:0,2:0,3:0,4:0,5:0},cnt={1:0,2:0,3:0,4:0,5:0},done=new Set(),sec={},tabs={},mer={};
+const meta=[
+{t:"Begriff klären",c:"var(--n)",cc:"var(--bg)",txt:"Computer, Smartphones und Spielkonsolen arbeiten nach demselben Grundprinzip, dem <b>EVA-Prinzip</b>. Ordne zuerst die Beschreibungen den drei Schritten zu und dann ein Beispiel.",m:"<b>Merke:</b> Ein Computer nimmt Daten auf (<b>E</b>ingabe), verändert sie nach festen Regeln (<b>V</b>erarbeitung) und gibt das Ergebnis aus (<b>A</b>usgabe)."},
+{t:"Eingaben",c:"var(--e)",txt:"Über <b>Eingabegeräte</b> gelangen Daten in den Computer. Finde heraus, welche Geräte dazugehören und welche Daten sie liefern.",m:"<b>Merke:</b> Eingabegeräte bringen Daten in den Computer, zum Beispiel Tastatur (Text), Maus (Bewegung und Klicks), Mikrofon (Ton), Scanner (Bild) und Webcam (Video)."},
+{t:"Verarbeitung",c:"var(--v)",cc:"var(--onv)",txt:"Was in der <b>Verarbeitung</b> passiert, hängt vom Programm und vom Zweck ab. Lies die vier Beispiele und wähle jeweils, was im Inneren geschieht.",m:"<b>Merke:</b> Die Verarbeitung ist je nach Beispiel etwas anderes: rechnen, Sprache erkennen, Farben umrechnen oder neue Positionen berechnen. Immer wird aus der Eingabe die Ausgabe erzeugt."},
+{t:"Ausgaben",c:"var(--a)",txt:"Über <b>Ausgabegeräte</b> erhalten wir das Ergebnis. Finde sie und ordne sie den Sinnen zu, die sie ansprechen.",m:"<b>Merke:</b> Ausgabegeräte machen Ergebnisse für unsere Sinne wahrnehmbar: Monitor, Beamer und Drucker zum Sehen, Lautsprecher und Kopfhörer zum Hören, Vibration zum Fühlen."},
+{t:"Mischformen",c:"var(--m)",txt:"Manche Geräte können <b>beides</b> gleichzeitig. Entscheide, was jedes Gerät kann, und finde dann seinen Eingabe- und Ausgabeteil.",m:"<b>Merke:</b> Mischgeräte wie Headset, Touchscreen und Gamepad mit Vibration sind Eingabe- und Ausgabegerät zugleich. Man muss immer fragen, welcher Teil eingibt und welcher ausgibt."}
+];
+const nav=document.getElementById("nav"),tk=document.getElementById("tasks");
+meta.forEach((m,i)=>{const n=i+1;
+ const b=el("button",0,n+" "+m.t);b.type="button";b.setAttribute("role","tab");b.onclick=()=>show(n);nav.append(b);tabs[n]=b;
+ const s=el("section","task");s.hidden=true;s.style.setProperty("--c",m.c);if(m.cc)s.style.setProperty("--cc",m.cc);
+ s.append(el("h2",0,"Aufgabe "+n+": "+m.t),el("p",0,m.txt));tk.append(s);sec[n]=s;
+ b.style.setProperty("--c",m.c);if(m.cc)b.style.setProperty("--cc",m.cc);
+ const mm=el("div","merke",m.m);mm.hidden=true;mer[n]=mm;
+});
+function show(n){for(const k in sec){sec[k].hidden=k!=n;tabs[k].setAttribute("aria-selected",k==n)}window.scrollTo({top:0,behavior:"smooth"})}
+function reg(t){need[t]++;return t+"-"+(++cnt[t])}
+function fin(t,id){done.add(id);let ok=0;for(let k=1;k<=5;k++){const d=[...done].filter(x=>x.startsWith(k+"-")).length;const c=d>=need[k];tabs[k].classList.toggle("dn",c);mer[k].hidden=!c;if(c)ok++}
+ document.getElementById("pt").textContent=ok+" von 5 Aufgaben geschafft";document.getElementById("pf").style.width=ok*20+"%";document.getElementById("end").hidden=ok<5}
+function card(t,title,intro){const c=el("div","card");c.append(el("h3",0,title));if(intro)c.append(el("p","hint",intro));sec[t].append(c);return c}
+function fb(c){const f=el("p","fb");f.setAttribute("aria-live","polite");c.append(f);return f}
+function msg(f,ok,t){f.textContent=t;f.className="fb "+(ok?"good":"no")}
+function btn(c,fn){const b=el("button","btn","Prüfen");b.type="button";b.onclick=fn;c.append(b)}
+function classify(t,title,intro,items,cats){const id=reg(t),c=card(t,title,intro),sel=[];
+ items.forEach((it,i)=>{const r=el("div","row");r.append(el("span","txt",it[0]));const g=el("div","opts");
+  cats.forEach(k=>{const b=el("button","opt",k);b.type="button";b.onclick=()=>{sel[i]=k;[...g.children].forEach(x=>x.classList.toggle("on",x===b));r.classList.remove("ok","bad")};g.append(b)});r.append(g);c.append(r)});
+ const f=fb(c);
+ btn(c,()=>{let n=0;const rs=c.querySelectorAll(".row");items.forEach((it,i)=>{const ok=sel[i]===it[1];if(ok)n++;rs[i].classList.toggle("ok",ok);rs[i].classList.toggle("bad",sel[i]!=null&&!ok)});
+  const all=n==items.length;msg(f,all,all?"Alles richtig!":n+" von "+items.length+" richtig. Prüfe die rot markierten Zeilen und die noch offenen.");if(all)fin(t,id)})}
+function pick(t,title,intro,items){const id=reg(t),c=card(t,title,intro),g=el("div","chips");
+ items.forEach(it=>{const b=el("button","chip",it[0]);b.type="button";b.setAttribute("aria-pressed","false");b.onclick=()=>{b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!="true");b.classList.remove("bad")};g.append(b)});c.append(g);
+ const f=fb(c);
+ btn(c,()=>{let w=0,m=0;[...g.children].forEach((b,i)=>{const on=b.getAttribute("aria-pressed")=="true";const bad=on&&!items[i][1];b.classList.toggle("bad",bad);if(bad)w++;if(!on&&items[i][1])m++});
+  const ok=!w&&!m;msg(f,ok,ok?"Richtig, alle gefunden!":(w?w+" falsch angeklickt (gestrichelt). ":"")+(m?m+" fehlen noch.":""));if(ok)fin(t,id)})}
+function match(t,title,intro,rows,opts,cols){const id=reg(t),c=card(t,title,intro),ss=[];
+ rows.forEach((r,i)=>{const d=el("div","mrow");d.append(el("span","nm",r[0]));ss[i]=[];
+  r[1].forEach((a,j)=>{const s=el("select");s.setAttribute("aria-label",(cols?cols[j]+": ":"")+r[0]);s.innerHTML="<option value=''>"+(cols?cols[j]:"auswählen")+" …</option>"+opts.map(o=>"<option>"+o+"</option>").join("");s.onchange=()=>d.classList.remove("ok","bad");ss[i].push(s);d.append(s)});c.append(d)});
+ const f=fb(c);
+ btn(c,()=>{let n=0;const ds=c.querySelectorAll(".mrow");rows.forEach((r,i)=>{const ok=r[1].every((a,j)=>ss[i][j].value===a);if(ok)n++;ds[i].classList.toggle("ok",ok);ds[i].classList.toggle("bad",!ok&&ss[i].some(s=>s.value))});
+  const all=n==rows.length;msg(f,all,all?"Alles richtig!":n+" von "+rows.length+" richtig. Prüfe die rot markierten Zeilen und die noch offenen.");if(all)fin(t,id)})}
+function choices(t,title,intro,list){const id=reg(t),c=card(t,title,intro);
+ list.forEach((s,i)=>{const w=el("div","scen"),nm=id+"-"+i;
+  w.innerHTML="<div class='f3'><div class='bx e'><b>Eingabe</b>"+s.e+"</div><div class='bx v'><b>Verarbeitung</b><fieldset><legend>Was passiert in der Verarbeitung?</legend>"+s.o.map((o,k)=>"<label><input type='radio' name='"+nm+"' value='"+k+"'> "+o+"</label>").join("")+"</fieldset></div><div class='bx a'><b>Ausgabe</b>"+s.a+"</div></div>";
+  w.addEventListener("change",()=>w.classList.remove("ok","bad"));c.append(w)});
+ const f=fb(c);
+ btn(c,()=>{let n=0;const ws=c.querySelectorAll(".scen");list.forEach((s,i)=>{const r=ws[i].querySelector("input:checked"),ok=r&&+r.value===s.c;if(ok)n++;ws[i].classList.toggle("ok",!!ok);ws[i].classList.toggle("bad",!!r&&!ok)});
+  const all=n==list.length;msg(f,all,all?"Alle Beispiele richtig!":n+" von "+list.length+" richtig. Lies die Verarbeitung bei den rot markierten Beispielen noch einmal genau.");if(all)fin(t,id)})}
+function note(t,label,ph){const c=card(t,label);const a=el("textarea");a.placeholder=ph;a.setAttribute("aria-label",label);c.append(a)}
+function next(t){const c=el("div");const b=el("button","btn gh",t<5?"Weiter zu Aufgabe "+(t+1):"Zurück zu Aufgabe 1");b.type="button";b.onclick=()=>show(t<5?t+1:1);c.append(b);sec[t].append(mer[t],c)}
+
+const E="Eingabe",V="Verarbeitung",A="Ausgabe";
+classify(1,"Teil A: Was bedeuten die Schritte?","Wähle bei jeder Beschreibung den passenden Schritt.",[
+["Der Computer nimmt Daten oder Befehle entgegen.",E],["Der Computer rechnet, sortiert oder verändert die Daten.",V],["Der Computer zeigt oder liefert das Ergebnis.",A]],[E,V,A]);
+classify(1,"Teil B: Beispiel Taschenrechner","Welcher Schritt des EVA-Prinzips ist das?",[
+["Du tippst 7 + 5 ein.",E],["Der Rechner addiert die beiden Zahlen.",V],["Im Display erscheint 12.",A]],[E,V,A]);
+pick(2,"Teil A: Eingabegeräte finden","Klicke alle Geräte an, mit denen man Daten <b>eingibt</b>.",[["Tastatur",1],["Monitor",0],["Maus",1],["Lautsprecher",0],["Mikrofon",1],["Drucker",0],["Scanner",1],["Beamer",0],["Webcam",1],["Kopfhörer",0],["Grafiktablett",1],["Joystick",1]]);
+match(2,"Teil B: Welche Daten liefert das Gerät?","Wähle für jedes Eingabegerät die Art der Daten.",[["Tastatur",["Text und Zeichen"]],["Maus",["Bewegung und Klicks"]],["Mikrofon",["Töne und Sprache"]],["Scanner",["Bild einer Papierseite"]],["Webcam",["Videobild"]]],["Text und Zeichen","Bewegung und Klicks","Töne und Sprache","Bild einer Papierseite","Videobild"]);
+choices(3,"Was passiert im Inneren?","Wähle bei jedem Beispiel die richtige Verarbeitung.",[
+{e:"Du tippst <b>12 · 5</b> in den Taschenrechner.",a:"Im Display steht <b>60</b>.",o:["Die Zahlen werden verschlüsselt.","Die Zahlen werden multipliziert.","Die Zahlen werden ausgedruckt."],c:1},
+{e:"Du fragst den Sprachassistenten: „Wie wird das Wetter morgen?“",a:"Der Lautsprecher antwortet: „Morgen scheint die Sonne.“",o:["Die Sprache wird erkannt, Wetterdaten werden gesucht und in einen Antwortsatz umgewandelt.","Das Mikrofon speichert nur die Lautstärke.","Der Lautsprecher fragt zurück."],c:0},
+{e:"Du wählst bei einem Foto den Filter <b>Schwarz-weiß</b>.",a:"Das Foto erscheint ohne Farben.",o:["Das Foto wird kleiner gerechnet.","Die Farbwerte jedes Bildpunkts werden in Grautöne umgerechnet.","Das Foto wird gescannt."],c:1},
+{e:"Du drückst in einem Spiel die <b>Pfeiltaste rechts</b>.",a:"Die Spielfigur bewegt sich nach rechts.",o:["Das Spiel berechnet die neue Position der Figur und zeichnet das Bild neu.","Die Tastatur bewegt die Figur.","Das Spiel löscht die Figur."],c:0}]);
+note(3,"Eigenes Beispiel (freiwillig)","Denke dir ein Gerät oder eine App aus und beschreibe Eingabe, Verarbeitung und Ausgabe in drei Sätzen.");
+pick(4,"Teil A: Ausgabegeräte finden","Klicke alle Geräte an, die ein Ergebnis <b>ausgeben</b>.",[["Monitor",1],["Tastatur",0],["Lautsprecher",1],["Maus",0],["Drucker",1],["Mikrofon",0],["Beamer",1],["Scanner",0],["Kopfhörer",1],["Webcam",0],["3D-Drucker",1],["Joystick",0]]);
+classify(4,"Teil B: Welchen Sinn sprechen sie an?","Ordne zu, wie wir die Ausgabe wahrnehmen.",[
+["Monitor",'sehen'],["Lautsprecher",'hören'],["Vibration im Smartphone",'fühlen'],["Drucker",'sehen'],["Kopfhörer",'hören'],["Braillezeile (Punkte zum Ertasten)",'fühlen']],["sehen","hören","fühlen"]);
+classify(5,"Teil A: Was kann das Gerät?","Ordne jedes Gerät zu.",[
+["Headset",'Beides'],["Tastatur",'Nur Eingabe'],["Touchscreen",'Beides'],["Drucker",'Nur Ausgabe'],["Gamepad mit Vibration",'Beides'],["Webcam",'Nur Eingabe'],["Lautsprecher",'Nur Ausgabe']],["Nur Eingabe","Nur Ausgabe","Beides"]);
+match(5,"Teil B: Eingabeteil und Ausgabeteil","Welcher Teil des Geräts gibt ein, welcher aus?",[["Headset",["Mikrofon","Kopfhörer"]],["Touchscreen",["Berührung mit dem Finger","Bild"]],["Gamepad",["Tasten und Sticks","Vibration"]]],["Mikrofon","Kopfhörer","Berührung mit dem Finger","Bild","Tasten und Sticks","Vibration"],["Eingabe","Ausgabe"]);
+note(5,"Erfinde ein Mischgerät (freiwillig)","Welches Gerät könnte Eingabe und Ausgabe verbinden? Beschreibe beide Teile.");
+for(let n=1;n<=5;n++)next(n);
+show(1);
+</script>
+</body>
+</html>
